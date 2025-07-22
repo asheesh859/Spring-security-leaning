@@ -21,26 +21,33 @@ public class UserServiceImp implements UserService{
     private final UserRepository userRepository;
     @Override
     public User userSave(User user) {
-        return null;
+
+        User userResult = userRepository.save(user);
+        return userResult;
     }
 
     @Override
     public Role saveRole(Role role) {
-        return null;
+        Role roleResult = roleRepository.save(role);
+        return roleResult;
     }
 
     @Override
     public void addRoleToUser(String username, String rolename) {
-
+        User user = userRepository.findByUsername(username);
+        Role role = roleRepository.findByName(rolename);
+        boolean add = user.getRole().add(role);
     }
 
     @Override
     public User getUser(String username) {
-        return null;
+        User getUser = userRepository.findByUsername(username);
+        return getUser;
     }
 
     @Override
     public List<User> getUsers() {
-        return List.of();
+        List<User> allUser = userRepository.findAll();
+        return allUser;
     }
 }
