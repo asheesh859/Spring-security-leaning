@@ -15,6 +15,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String username;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     private String password;
     @ManyToMany(fetch =EAGER)
     private Collection<Role> role = new ArrayList<>();
