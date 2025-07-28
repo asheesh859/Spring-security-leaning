@@ -10,12 +10,14 @@ import static jakarta.persistence.FetchType.EAGER;
 @Entity
 @Table(name = "user")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String username;
+    private String password;
+    @ManyToMany(fetch =EAGER)
+    private Collection<Role> role = new ArrayList<>();
 
     public String getUsername() {
         return username;
@@ -24,10 +26,6 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
-
-    private String password;
-    @ManyToMany(fetch =EAGER)
-    private Collection<Role> role = new ArrayList<>();
 
     public Long getId() {
         return id;
