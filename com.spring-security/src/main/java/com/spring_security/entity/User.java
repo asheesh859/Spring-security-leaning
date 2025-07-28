@@ -1,6 +1,9 @@
 package com.spring_security.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,6 +11,9 @@ import java.util.Collection;
 import static jakarta.persistence.FetchType.EAGER;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user")
 public class User {
     @Id
