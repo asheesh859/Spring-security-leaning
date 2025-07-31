@@ -1,4 +1,13 @@
 package com.spring_security.security;
 
-public class SecurityConfig {
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
+
+@Configuration
+@EnableWebSecurity
+@RequiredArgsConstructor
+
+public class SecurityConfig extends WebSecurity{
 }
