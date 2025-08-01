@@ -3,7 +3,7 @@ package com.security_psa.security.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import org.springframework.beans.BeanUtils;
 import com.security_psa.security.ApiResponse.ApiResponse;
 import com.security_psa.security.entity.User;
 import com.security_psa.security.payload.UserPayload;
@@ -37,8 +37,8 @@ public class AuthService {
 
         }
         User user = new User();
-        BeanUtils.cpyProperties(userPayload, user);
-        user.setPassword(passwordEncoder.encode(userPayload.getpassword()));
+        BeanUtils.copyProperties(userPayload, user);
+        user.setPassword(passwordEncoder.encode(userPayload.getPassword()));
         userRepository.save(user);
 
         ApiResponse<String> response = new ApiResponse<>();
