@@ -15,11 +15,25 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class Config {
+
+	String[] publicEndPoint ={
+		"/api/v1/auth/register",
+		"/api/v1/auth/login",
+		"/v3/api-docs/**",
+        "/swagger-ui/**",
+        "/swagger-ui.html",
+        "/swagger-resources/**",
+        "/webjars/**",
+        "/actuator/**", 
+        "/eureka/**"
+	};
  @Bean
 	public SecurityFilterChain securityConfig(HttpSecurity http) throws Exception{
-		http.authorizeHttpRequests(
+		http
+		.csrf(csfr ->csfr.disable())
+		.authorizeHttpRequests(
 				 req->{
-					req.requestMatchers("/api/v1/welcome/hello").permitAll()
+					req.requestMatchers(publicEndPoint).permitAll()
 					.anyRequest().authenticated();
 				 }
 				);
