@@ -19,16 +19,16 @@ public class AuthService {
 
     public ApiResponse<String> registerUser(UserPayload userPayload){
 
-        if(userRepository.existsByUsername(userPayload.getUserName())){
+        if(userRepository.existsByUsername(userPayload.getUsername())){
             ApiResponse<String> response = new ApiResponse<>();
-            response.setMessage("Username already exists");
+            response.setMessage("username already exists");
             response.setStatusCode(400);
             response.setData("Registration failed with exist username");
             return response;
             
         }
 
-        if(userRepository.existsByEmail(null)){
+        if(userRepository.existsByEmail(userPayload.getEmail())){
             ApiResponse<String> response = new ApiResponse<>();
             response.setMessage("Email already exists");
             response.setStatusCode(400);
@@ -44,7 +44,7 @@ public class AuthService {
         ApiResponse<String> response = new ApiResponse<>();
         response.setMessage("User registerd successfully");
         response.setStatusCode(200);
-        response.setData("User registered successfully with username:"+user.getUserName());
+        response.setData("User registered successfully with "+user.getUsername());
         return response;
     }
 
