@@ -7,7 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.authentication.configurers.userdetails.DaoAuthenticationConfigurer;
+import org.springframework.security.config.annotation.authentication.configurers.userdetails.DaoAuthenticationConfigurer;	
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -40,11 +40,10 @@ public class Config {
 		.csrf(csfr ->csfr.disable())
 		.authorizeHttpRequests(
 				 req->{
-					req.requestMatchers(publicEndPoint).permitAll()
+					req.requestMatchers(publicEndPoint).permitAll().requestMatchers("/api/v1/admin/welcome").hasRole("ADMIN")
 					.anyRequest().authenticated();
-				 }
-				);
-		return http.build();
+				 }).httpBasic();
+		return http.csrf().disable().build();
 		
 	}
 
