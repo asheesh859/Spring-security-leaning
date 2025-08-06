@@ -7,6 +7,8 @@ import com.security_psa.security.ApiResponse.ApiResponse;
 import com.security_psa.security.payload.LoginPayload;
 import com.security_psa.security.payload.UserPayload;
 import com.security_psa.security.service.AuthService;
+import com.security_psa.security.service.JwtService;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +29,9 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authManager;
 
+    @Autowired
+    private JwtService jwtService;
+
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody UserPayload userPayload) {
 
@@ -44,11 +49,13 @@ public class AuthController {
 				 new UsernamePasswordAuthenticationToken(loginPayload.getUsername(), loginPayload.getPassword());
                  try{
 
+
                     Authentication authetication = authManager.authenticate(token);
                     if(authetication.isAuthenticated()){
+                        String jwtToken = jwtService.generateToken(loginPayload.getUsername(), token.getAuthorities().iterator().next().getAuthority());
                         response.setMessage("Login successful");
                        response.setStatusCode(200);
-                       response.setData("user logged in successfully");
+                       response.setData("Bearer " + jwtToken);
                        ResponseEntity<ApiResponse<String>> responseEntity= new ResponseEntity<>(response,HttpStatus.OK);
                        return responseEntity;
                     }
