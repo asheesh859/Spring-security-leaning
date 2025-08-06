@@ -48,11 +48,9 @@ public class AuthController {
         UsernamePasswordAuthenticationToken token = 
 				 new UsernamePasswordAuthenticationToken(loginPayload.getUsername(), loginPayload.getPassword());
                  try{
-
-
                     Authentication authetication = authManager.authenticate(token);
                     if(authetication.isAuthenticated()){
-                        String jwtToken = jwtService.generateToken(loginPayload.getUsername(), token.getAuthorities().iterator().next().getAuthority());
+                        String jwtToken = jwtService.generateToken(loginPayload.getUsername(), authetication.getAuthorities().iterator().next().getAuthority());
                         response.setMessage("Login successful");
                        response.setStatusCode(200);
                        response.setData("Bearer " + jwtToken);
