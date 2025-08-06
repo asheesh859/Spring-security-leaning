@@ -46,14 +46,16 @@ public class AuthController {
 
         ApiResponse<String> response = new ApiResponse<>();
         UsernamePasswordAuthenticationToken token = 
-				 new UsernamePasswordAuthenticationToken(loginPayload.getUsername(), loginPayload.getPassword());
+				 new UsernamePasswordAuthenticationToken(loginPayload.getUsername(), loginPayload.getPassword());   
                  try{
                     Authentication authetication = authManager.authenticate(token);
+                    String username = loginPayload.getUsername();
+                    String role = authetication.getAuthorities().iterator().next().getAuthority();
                     if(authetication.isAuthenticated()){
-                        String jwtToken = jwtService.generateToken(loginPayload.getUsername(), authetication.getAuthorities().iterator().next().getAuthority());
+                        String jwtToken = jwtService.generateToken(username,role);
                         response.setMessage("Login successful");
                        response.setStatusCode(200);
-                       response.setData("Bearer " + jwtToken);
+                       response.setData(jwtToken);
                        ResponseEntity<ApiResponse<String>> responseEntity= new ResponseEntity<>(response,HttpStatus.OK);
                        return responseEntity;
                     }

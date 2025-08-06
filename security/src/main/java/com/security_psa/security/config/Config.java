@@ -13,7 +13,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.security_psa.security.authService.JwtFilter;
 import com.security_psa.security.service.CustomUserDetailsService;
 
 @Configuration
@@ -22,6 +24,9 @@ public class Config {
 
 	@Autowired
 	private CustomUserDetailsService customUserDetailsService;
+
+	@Autowired
+	private JwtFilter filter;
 
 	String[] publicEndPoint ={
 		"/api/v1/auth/register",
@@ -42,7 +47,7 @@ public class Config {
 				 req->{
 					req.requestMatchers(publicEndPoint).permitAll().requestMatchers("/api/v1/admin/welcome").hasRole("ADMIN")
 					.anyRequest().authenticated();
-				 }).httpBasic();
+				 }).authenticationProvider(authProvider()).addFilterBefore(filter,UsernamePasswordAuthenticationFilter.class);
 		return http.csrf().disable().build();
 		
 	}
@@ -66,6 +71,8 @@ public class Config {
 		return authProvider;
 		
 	}
+
+
 
 }
 
