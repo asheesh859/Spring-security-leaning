@@ -17,10 +17,12 @@ public class JwtService {
     // - validateToken(String token)
     // - extractUsername(String token)
     // - etc.
+
+    final String SECRET_KEY = "secret_key";
+    final Long EXPIRATION_TIME= 86400000L; // 1 day in milliseconds
     public String generateToken(String username , String role){
 
-       final String SECRET_KEY = "secret_key";
-       final Long EXPIRATION_TIME= 86400000L; // 1 day in milliseconds
+
         
         // Logic to generate JWT token based on username and role
         // This is a placeholder method and should be implemented as per your requirements.
@@ -35,4 +37,7 @@ public class JwtService {
        return jwt;
     }
 
+    public String validateTokenAndRetrivingSubject(String jwtToken) {
+        return JWT.require(Algorithm.HMAC256(SECRET_KEY)).build().verify(jwtToken).getToken();
+    }
 }
