@@ -38,6 +38,6 @@ public class JwtService {
     }
 
     public String validateTokenAndRetrivingSubject(String jwtToken) {
-        return JWT.require(Algorithm.HMAC256(SECRET_KEY)).build().verify(jwtToken).getToken();
+        return JWT.require(Algorithm.HMAC256(SECRET_KEY)).build().verify(jwtToken).getSubject();
     }
 }

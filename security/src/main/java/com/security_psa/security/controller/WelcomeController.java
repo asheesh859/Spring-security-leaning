@@ -4,10 +4,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/welcome")
+@RequestMapping("/api/v1/admin")
 public class WelcomeController {
     
-    @GetMapping("/hello")
+    @GetMapping("/welcome")
     public String sayHello() {
         return "Hello, Welcome to the Security Application!";
     }

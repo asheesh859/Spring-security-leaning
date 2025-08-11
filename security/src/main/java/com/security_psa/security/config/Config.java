@@ -42,12 +42,16 @@ public class Config {
  @Bean
 	public SecurityFilterChain securityConfig(HttpSecurity http) throws Exception{
 		http
-		.csrf(csfr ->csfr.disable())
+		//.csrf(csfr ->csfr.disable())
 		.authorizeHttpRequests(
 				 req->{
-					req.requestMatchers(publicEndPoint).permitAll().requestMatchers("/api/v1/admin/welcome").hasRole("ADMIN")
-					.anyRequest().authenticated();
-				 }).authenticationProvider(authProvider()).addFilterBefore(filter,UsernamePasswordAuthenticationFilter.class);
+					req.requestMatchers(publicEndPoint)
+							.permitAll()
+							.requestMatchers("/api/v1/admin/welcome").hasRole("ADMIN")
+							.anyRequest()
+							.authenticated();
+				 }).authenticationProvider(authProvider())
+				.addFilterBefore(filter,UsernamePasswordAuthenticationFilter.class);
 		return http.csrf().disable().build();
 		
 	}
