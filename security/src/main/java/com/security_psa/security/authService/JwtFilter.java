@@ -32,17 +32,13 @@ public class JwtFilter extends OncePerRequestFilter{
             throws ServletException, IOException {
         // Here you can add your JWT validation logic
        String authHeader =  request.getHeader("Authorization");
-         System.out.println("Authorization Header: " + authHeader);
        if(authHeader !=null && authHeader.startsWith("Bearer")){
         String jwtToken = authHeader.substring(7);
-
-
         String username = jwtService.validateTokenAndRetrivingSubject(jwtToken);
-        System.out.println(username);
+
         if(username!=null && SecurityContextHolder.getContext().getAuthentication()==null){
             var userDetails =customUserDetailsService.loadUserByUsername(username);
 
-            System.out.println(userDetails);
             var authToken = new UsernamePasswordAuthenticationToken(userDetails, null , userDetails.getAuthorities());
 
             authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
