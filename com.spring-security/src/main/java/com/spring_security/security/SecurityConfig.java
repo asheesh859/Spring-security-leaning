@@ -9,5 +9,5 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 @RequiredArgsConstructor
 
-public class SecurityConfig extends WebSecurity{
+public class SecurityConfig extends WebSecurityConfiguraAdepter{
 }
