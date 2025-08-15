@@ -1,7 +1,8 @@
 package com.security_psa.security.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.security_psa.security.entity.User;
+import com.security_psa.security.repository.UserRepository;
+import org.springframework.web.bind.annotation.*;
 
 import com.security_psa.security.ApiResponse.ApiResponse;
 import com.security_psa.security.payload.LoginPayload;
@@ -15,8 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
@@ -31,6 +30,9 @@ public class AuthController {
 
     @Autowired
     private JwtService jwtService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody UserPayload userPayload) {
@@ -69,7 +71,9 @@ public class AuthController {
                  ResponseEntity<ApiResponse<String>> responseEntity = new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
                  return responseEntity;
     }
-   }
-   
-    
 
+    @GetMapping("/get-user")
+    public User getUser(@RequestParam String username){
+        return userRepository.findByUsername(username);
+    }
+   }
